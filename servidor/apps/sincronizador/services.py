@@ -1,4 +1,4 @@
-import requests
+import requests # type: ignore
 from apps.clientes.models import Token
 
 
