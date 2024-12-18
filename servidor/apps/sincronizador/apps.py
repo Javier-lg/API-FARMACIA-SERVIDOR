@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class ConexionesConfig(AppConfig):
+class SincronizadorConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'apps.conexiones'
+    name = 'sincronizador'

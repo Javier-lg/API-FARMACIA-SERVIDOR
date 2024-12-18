@@ -4,7 +4,7 @@ from dotenv import load_dotenv # type: ignore
 
 load_dotenv()
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY', 'default-secret-key')  
 DEBUG = False
 ALLOWED_HOSTS = []
@@ -18,7 +18,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'apps.farmacia',
+    'apps.clientes',
 ]
 
 MIDDLEWARE = [
@@ -30,6 +32,21 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+
+  
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',         # json
+        'rest_framework.renderers.BrowsableAPIRenderer',  # interfaz de drf
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'apps.clientes.authentication.TokenAuthentication', #ruta de autenticacion
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated', # exige autenticacion siempre
+    )
+}
 
 ROOT_URLCONF = 'servidor.urls'
 
