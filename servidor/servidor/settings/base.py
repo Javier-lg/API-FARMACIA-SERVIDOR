@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'apps.farmacia',
     'apps.clientes',
+    'apps.sincronizador',
 ]
 
 MIDDLEWARE = [

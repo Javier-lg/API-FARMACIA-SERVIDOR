@@ -13,7 +13,7 @@ class Cliente(models.Model):
     def __str__(self):
         return self.nombre
     
-    def get_direccion(self):
+    def direccion(self):
         return f"{self.host}:{self.port}/{self.base}/{self.url}"
     
     @property
