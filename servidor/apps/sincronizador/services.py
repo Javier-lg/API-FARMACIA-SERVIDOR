@@ -2,21 +2,34 @@ import requests # type: ignore
 from apps.clientes.models import Token
 
 
-def enviar_actualizacion_farmacia(Cliente, payload):
-    url = Cliente.direccion()
-    token = Token.objects.get(Cliente=Cliente)
+import requests  # type: ignore
+from apps.clientes.models import Token
+
+def enviar_actualizacion_farmacia(cliente, timestamp, payload):
+    url = cliente.direccion()
+    token = Token.objects.get(cliente=cliente) 
     headers = {
         "SAFESA-Token": str(token.key),
         "Content-Type": "application/json",
     }
 
     try:
-        response = request.post(url, json=payload, headers = headers)
-        response.raise_for_status()
-        return response.json()
+        response = requests.post(url, json=payload, headers=headers)
+        response.raise_for_status()  # si el codigo de estado no indica exito (>=400)
+        return {
+            "status": "success",
+            "status_code": response.status_code,
+            "response": response.json(),
+            "error": None,
+        }
     except requests.exceptions.RequestException as e:
-        print(f"Error al informar la ultima actualizacion a {Cliente.nombre}: {e}")
-        return {"error":str(e)}
+        # errores
+        return {
+            "status": "failed",
+            "status_code": getattr(e.response, "status_code", None),  #  codigo de estado si esta disponible
+            "response": None,
+            "error": str(e),
+        }
     
 
     '''
